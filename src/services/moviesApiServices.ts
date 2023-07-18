@@ -37,13 +37,12 @@ class MoviesService {
         this.#upcomingMoviesEndpoint = upcomingMoviesEndpoint;
     }
 
-    async getFilmByName(name: string): Promise<Response> {
+    async getFilmByName(name: string, page: number): Promise<Response> {
         try {
             const query = `&query=${name}`;
-            const url = `${this.#baseURL}${this.#endpointSearchByName}${this.#keyAPI}${query}`;
-
+            const pageNumber = `page=${page || 1}&`;
+            const url = `${this.#baseURL}${this.#endpointSearchByName}${pageNumber}${this.#keyAPI}${query}`;
             const result = await apiRequestForList(url);
-
             return result;
         } catch (error) {
             throw new Error();
@@ -54,9 +53,7 @@ class MoviesService {
         try {
             const pageNumber = `page=${page || 1}&`;
             const url = `${this.#baseURL}${this.#popularEndpoint}${pageNumber}${this.#keyAPI}`;
-
             const result = await apiRequestForList(url);
-
             return result;
         } catch (error) {
             throw new Error();
@@ -67,9 +64,7 @@ class MoviesService {
         try {
             const pageNumber = `page=${page || 1}&`;
             const url = `${this.#baseURL}${this.#highestRatedEndpoint}${pageNumber}${this.#keyAPI}`;
-
             const result = await apiRequestForList(url);
-
             return result;
         } catch (error) {
             throw new Error();
@@ -80,9 +75,7 @@ class MoviesService {
         try {
             const pageNumber = `page=${page || 1}&`;
             const url = `${this.#baseURL}${this.#upcomingMoviesEndpoint}${pageNumber}${this.#keyAPI}`;
-
             const result = await apiRequestForList(url);
-
             return result;
         } catch (error) {
             throw new Error();

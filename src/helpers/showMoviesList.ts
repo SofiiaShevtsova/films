@@ -7,8 +7,7 @@ const randomFilm = (array: MoviesForApp[]): MoviesForApp => array[Math.floor(Mat
 
 export const showMoviesList = (list: MoviesForApp[], favoriteList: number[]): void => {
     if (constants.boxForList) {
-        constants.boxForList.innerHTML = '';
-        constants.boxForList.prepend(moviesList(list, favoriteList));
+        constants.boxForList.append(moviesList(list, favoriteList));
         if (constants.boxForRandomMovie) {
             constants.boxForRandomMovie.innerHTML = '';
             constants.boxForRandomMovie.prepend(randomMovieBox(randomFilm(list)));
