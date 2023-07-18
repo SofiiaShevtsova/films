@@ -35,7 +35,6 @@ class MoviesMaper {
     async addFavoriteMovies(movieId: number): Promise<void> {
         const response = await moviesService.getFilmById(movieId);
         const { id, title, name, overview, poster_path: posterPath, release_date: releaseDate } = response;
-
         this.favoriteMoviesList.push({ id, title, name, overview, posterPath, releaseDate });
         this.listForLocal.push(movieId);
         localStorage.setItem(constants.LIST_FAVORITE_MOVIES, JSON.stringify(this.listForLocal));

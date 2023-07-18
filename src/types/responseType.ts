@@ -2,7 +2,7 @@ import { Movies } from './moviesType';
 
 export type Response = {
     page: number;
-    results: Movies[] | Movies;
+    results: Movies[];
     total_pages: number;
     total_results: number;
 };

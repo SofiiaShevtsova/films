@@ -1,5 +1,5 @@
 import { Response, OneMovie } from '../types/responseType';
-import { apiRequest } from '../helpers/helpersAPI';
+import { apiRequestForList, apiRequestForMovie } from '../helpers/helpersAPI';
 
 class MoviesService {
     #baseURL: string;
@@ -37,12 +37,12 @@ class MoviesService {
         this.#upcomingMoviesEndpoint = upcomingMoviesEndpoint;
     }
 
-    async getFilmByName(name: string): Promise<Response | OneMovie> {
+    async getFilmByName(name: string): Promise<Response> {
         try {
             const query = `&query=${name}`;
             const url = `${this.#baseURL}${this.#endpointSearchByName}${this.#keyAPI}${query}`;
 
-            const result = await apiRequest(url);
+            const result = await apiRequestForList(url);
 
             return result;
         } catch (error) {
@@ -50,12 +50,12 @@ class MoviesService {
         }
     }
 
-    async getPopularFilms(page?: number): Promise<Response | OneMovie> {
+    async getPopularFilms(page?: number): Promise<Response> {
         try {
             const pageNumber = `page=${page || 1}&`;
             const url = `${this.#baseURL}${this.#popularEndpoint}${pageNumber}${this.#keyAPI}`;
 
-            const result = await apiRequest(url);
+            const result = await apiRequestForList(url);
 
             return result;
         } catch (error) {
@@ -63,12 +63,12 @@ class MoviesService {
         }
     }
 
-    async getHighestRatedFilms(page?: number): Promise<Response | OneMovie> {
+    async getHighestRatedFilms(page?: number): Promise<Response> {
         try {
             const pageNumber = `page=${page || 1}&`;
             const url = `${this.#baseURL}${this.#highestRatedEndpoint}${pageNumber}${this.#keyAPI}`;
 
-            const result = await apiRequest(url);
+            const result = await apiRequestForList(url);
 
             return result;
         } catch (error) {
@@ -76,12 +76,12 @@ class MoviesService {
         }
     }
 
-    async getUpcomingFilms(page?: number): Promise<Response | OneMovie> {
+    async getUpcomingFilms(page?: number): Promise<Response> {
         try {
             const pageNumber = `page=${page || 1}&`;
             const url = `${this.#baseURL}${this.#upcomingMoviesEndpoint}${pageNumber}${this.#keyAPI}`;
 
-            const result = await apiRequest(url);
+            const result = await apiRequestForList(url);
 
             return result;
         } catch (error) {
@@ -89,12 +89,10 @@ class MoviesService {
         }
     }
 
-    async getFilmById(id: number): Promise<Response | OneMovie> {
+    async getFilmById(id: number): Promise<OneMovie> {
         try {
             const url = `${this.#baseURL}movie/${id}?${this.#keyAPI}&language=en-US`;
-
-            const result = await apiRequest(url);
-
+            const result = await apiRequestForMovie(url);
             return result;
         } catch (error) {
             throw new Error();
