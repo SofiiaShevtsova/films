@@ -4,3 +4,22 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
+
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.heart{
+    fill: transparent;
+}
+
+.heart.favorite{
+    fill: red;
+}
+
+.offcanvas.offcanvas-end{
+    width: 100%;
+}
