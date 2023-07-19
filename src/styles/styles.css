@@ -19,3 +19,7 @@ li {
 .heart.favorite{
     fill: red;
 }
+
+.offcanvas.offcanvas-end{
+    width: 100%;
+}

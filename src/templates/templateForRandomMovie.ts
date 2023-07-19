@@ -6,7 +6,7 @@ const movieRandomCard = (movie: MoviesForApp): string =>
     `<p id="random-movie-description" class="lead text-white">${movie.overview}</p>` +
     `</div>`;
 
-export const randomMovieBox = (movie: MoviesForApp): Element => {
+export const randomMovieBox = (movie: MoviesForApp): HTMLElement => {
     const box = document.createElement('div');
     box.classList.add('row', 'py-lg-5');
     if (movie) {

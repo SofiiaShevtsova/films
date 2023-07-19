@@ -15,21 +15,29 @@ if (constants.boxForList) {
 }
 
 const checkLocalStorage = () => {
-    const localStorageList = JSON.parse(localStorage.getItem(constants.LIST_FAVORITE_MOVIES));
-    localStorage.removeItem(constants.LIST_FAVORITE_MOVIES);
-    if (localStorageList) {
-        localStorageList.map((item: number) => moviesDomServises.addFavoriteMovies(+item));
+    const getLocalStorage: string | null = localStorage.getItem(constants.LIST_FAVORITE_MOVIES);
+    if (getLocalStorage) {
+        const localStorageList: number[] = JSON.parse(getLocalStorage);
+        localStorage.removeItem(constants.LIST_FAVORITE_MOVIES);
+        if (localStorageList) {
+            localStorageList.map((item: number): Promise<void> => moviesDomServises.addFavoriteMovies(item));
+        }
     }
 };
 
-const choiseFavoriteMovie = (event: EventListenerObject) => {
-    if (event.currentTarget.classList.contains('favorite')) {
-        moviesDomServises.removeMovieFromFavorite(+event.currentTarget.id);
+const choiseFavoriteMovie = (event: Event) => {
+    const currentTarget: HTMLElement = event.currentTarget as HTMLElement;
+    if (currentTarget.classList.contains('favorite')) {
+        moviesDomServises.removeMovieFromFavorite(+currentTarget.id);
     } else {
-        moviesDomServises.addFavoriteMovies(+event.currentTarget.id);
+        moviesDomServises.addFavoriteMovies(+currentTarget.id);
     }
 
-    event.currentTarget.classList.toggle('favorite');
+    currentTarget.classList.toggle('favorite');
+    const favoriteIcon: NodeListOf<HTMLElement> = document.querySelectorAll('.heart');
+    favoriteIcon.forEach((btn: HTMLElement): void => {
+        btn.addEventListener('click', choiseFavoriteMovie);
+    });
 };
 
 const getMoviesList = async (moviesType: string): Promise<void> => {
@@ -62,22 +70,25 @@ const getMoviesList = async (moviesType: string): Promise<void> => {
             moviesDomServises.setMoviesList(results);
         }
     }
-    const favoriteIcon: NodeListOf<Element> = document.querySelectorAll('.heart');
-    favoriteIcon.forEach((btn: Element) => {
+    const favoriteIcon: NodeListOf<HTMLElement> = document.querySelectorAll('.heart');
+    favoriteIcon.forEach((btn: HTMLElement): void => {
         btn.addEventListener('click', choiseFavoriteMovie);
     });
 };
 
 const searchMovieByName = async (event: Event) => {
     event.preventDefault();
-    const query = event.target?.querySelector('input').value.trim();
-    page = 1;
-    sortMovies = query;
-    if (constants.boxForList) {
-        constants.boxForList.innerHTML = '';
+    if (constants.formForSearch) {
+        const input: HTMLInputElement | null = constants.formForSearch.querySelector('input');
+        const query = input ? input.value.trim() : sortMovies;
+        page = 1;
+        sortMovies = query;
+        if (constants.boxForList) {
+            constants.boxForList.innerHTML = '';
+        }
+        constants.formForSearch.reset();
+        getMoviesList(query);
     }
-    event.target?.reset();
-    getMoviesList(query);
 };
 
 const changeMoviesListSort = async (event: Event) => {
@@ -86,8 +97,10 @@ const changeMoviesListSort = async (event: Event) => {
         constants.boxForList.innerHTML = '';
     }
 
-    if (event.target?.id) {
-        getMoviesList(event.target?.id);
+    const target: HTMLElement = event.target as HTMLElement;
+
+    if (target.id) {
+        getMoviesList(target.id);
     }
 };
 

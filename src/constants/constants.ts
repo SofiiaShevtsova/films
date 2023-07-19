@@ -1,22 +1,22 @@
-const main: Element | null = document.querySelector('main');
+const main: HTMLElement | null = document.querySelector('main');
 
 interface Constants {
-    boxForRandomMovie: Element | null | undefined;
-    boxForList: Element | null | undefined;
-    boxForFavoriteMovies: Element | null | undefined;
-    boxForRadioBtn: Element | null | undefined;
-    formForSearch: Element | null | undefined;
-    btnLoadMore: Element | null | undefined;
+    boxForRandomMovie: HTMLElement | null;
+    boxForList: HTMLElement | null | undefined;
+    boxForFavoriteMovies: HTMLElement | null;
+    boxForRadioBtn: HTMLElement | null;
+    formForSearch: HTMLFormElement | null | undefined;
+    btnLoadMore: HTMLElement | null;
     LIST_FAVORITE_MOVIES: string;
 }
 
 export const constants: Constants = {
-    boxForRandomMovie: main?.querySelector('#random-movie'),
+    boxForRandomMovie: document.querySelector('#random-movie'),
     boxForList: main?.querySelector('.container'),
     boxForFavoriteMovies: document.querySelector('#favorite-movies'),
-    boxForRadioBtn: main?.querySelector('#button-wrapper'),
+    boxForRadioBtn: document.querySelector('#button-wrapper'),
     formForSearch: main?.querySelector('form'),
-    btnLoadMore: main?.querySelector('#load-more'),
+    btnLoadMore: document.querySelector('#load-more'),
 
     LIST_FAVORITE_MOVIES: 'list-favorite-movies',
 };

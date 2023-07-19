@@ -19,7 +19,7 @@ const movieCard = (movie: MoviesForApp, favoriteList: number[]): string =>
     `<small class="text-muted">${movie.releaseDate}</small>` +
     `</div></div></div></li>`;
 
-export const moviesList = (array: MoviesForApp[], favoriteList: number[]): Element => {
+export const moviesList = (array: MoviesForApp[], favoriteList: number[]): HTMLElement => {
     const list = document.createElement('ul');
     list.classList.add('row');
     list.innerHTML = array.map((movie: MoviesForApp) => movieCard(movie, favoriteList)).join(' ');
